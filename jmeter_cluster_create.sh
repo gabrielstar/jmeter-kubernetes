@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 #Create multiple Jmeter namespaces on an existing kuberntes cluster
 #Started On January 23, 2018
+#On azure master node is not accessible directly as per https://stackoverflow.com/questions/48143225/master-node-on-aks-cluster
 
-working_dir=`pwd`
+working_dir=$(pwd)
 
 echo "checking if kubectl is present"
 
