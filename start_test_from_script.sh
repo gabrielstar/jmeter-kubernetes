@@ -11,7 +11,8 @@ jmx="cloudssky.jmx"
 
 
 test_name="$(basename "$jmx")"
-
+#delete evicted pods first
+kubectl get pods --all-namespaces --field-selector 'status.phase==Failed' -o json | kubectl delete -f -
 #Get Master pod details
 
 master_pod=`kubectl get po -n $tenant | grep Running | grep jmeter-master | awk '{print $1}'`

@@ -48,7 +48,7 @@ jobs:
         namespace: $(cluster_namespace)
 
     - task: KubernetesManifest@0
-      displayName: Scale master to $(scale_up_replicas)
+      displayName: Scale master to $(scale_up_replicas_master)
       inputs:
         kubernetesServiceConnection: $(kubernetesServiceConnection)
         action: scale
