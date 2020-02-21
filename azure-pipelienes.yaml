@@ -31,9 +31,6 @@ jobs:
         displayName: 'Login and Set default Azure DevOps organization and project'
 
       - script: |
-          kubectl config set-cluster $(cluster_name) --server=$(cluster_url)
-          kubectl config use-context $(cluster_name)
-          echo "Current state"
           kubectl get pods -n $(cluster_namespace)
           kubectl scale deployment jmeter-slaves --replicas=$(scale_down_replicas) -n $(cluster_namespace)
         displayName: 'Scale down'
