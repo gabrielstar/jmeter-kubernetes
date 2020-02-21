@@ -6,6 +6,7 @@ jobs:
 
     variables:
       cluster_name: jubernetes
+      cluster_resource_group: jmeter-group
       cluster_namespace: jubernetes2
       cluster_url: https://jubernetes-dns-782297cf.hcp.westeurope.azmk8s.io:443 #get it from kubectl cluster-info
     timeoutInMinutes: 5
@@ -13,27 +14,17 @@ jobs:
     steps:
       - script: |
           echo $(System.AccessToken) | az login
-          az aks get-credentials --resource-group jmeter-group --name jubernetes
+          az aks get-credentials --resource-group $(cluster_resource_group) --name $(cluster_name)
         displayName: 'Get Kubernetes Credentials'
-
-      - script: az --version
-        displayName: 'Show Azure CLI version'
 
       - script: az extension add -n azure-devops
         displayName: 'Install Azure DevOps Extension'
 
-      - script: echo ${AZURE_DEVOPS_CLI_PAT} | az devops login
-        env:
-          AZURE_DEVOPS_CLI_PAT: $(System.AccessToken)
-        displayName: 'Login Azure DevOps Extension'
-
-      - script: az devops configure --defaults organization=https://dev.azure.com/gstarczewski project="jmeter" --use-git-aliases true
-        displayName: 'Set default Azure DevOps organization and project'
 
       - script: |
-          az pipelines build list
-          git pr list
-        displayName: 'Show build list and PRs'
+          echo $(System.AccessToken) | az devops login
+          az devops configure --defaults organization=https://dev.azure.com/gstarczewski project="jmeter" --use-git-aliases true
+        displayName: 'Login and Set default Azure DevOps organization and project'
 
       - script: |
           echo $(System.AccessToken) | az devops login
