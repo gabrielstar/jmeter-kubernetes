@@ -1,25 +1,22 @@
 #This pipeline is configured with PAT so requires TFA - need to be refactored so it is not required
 #restarting is done by scaling to 0 and back to desired number of slaves = all pods - 1
 name: $(BuildID)
+variables:
+  azure_subscription_endpoint: p
+  azure_resource_group: jmeter-group
+  cluster_name: jubernetes
+  cluster_resource_group: jmeter-group
+  cluster_namespace: jubernetes2
+  kubernetesServiceConnection: pupa2
+  cluster_url: https://jubernetes-dns-782297cf.hcp.westeurope.azmk8s.io:443 #get it from kubectl cluster-info
+  scale_down_replicas: 0
+  scale_up_replicas: 2
+  service: jmeter-slaves
 jobs:
   - job: Restart_Jmeter_Slaves
     pool:
       vmImage: 'ubuntu-latest'
-
-    variables:
-      azure_subscription_endpoint: p
-      azure_resource_group: jmeter-group
-      cluster_name: jubernetes
-      cluster_resource_group: jmeter-group
-      cluster_namespace: jubernetes2
-      kubernetesServiceConnection: pupa2
-      cluster_url: https://jubernetes-dns-782297cf.hcp.westeurope.azmk8s.io:443 #get it from kubectl cluster-info
-      scale_down_replicas: 0
-      scale_up_replicas: 2
-      service: jmeter-slaves
-
     timeoutInMinutes: 5
-
     steps:
     - task: KubernetesManifest@0
       displayName: Scale to $(scale_down_replicas)
