@@ -5,27 +5,12 @@ jobs:
       vmImage: 'ubuntu-latest'
 
     variables:
-      timeout: 5
       cluster_name: jubernetes
       cluster_namespace: jubernetes2
       cluster_url: https://jubernetes-dns-782297cf.hcp.westeurope.azmk8s.io:443 #get it from kubectl cluster-info
-    timeoutInMinutes: $(timeout)
+    timeoutInMinutes: 5
 
     steps:
-      # Updating the python version available on the linux agent
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: '3.x'
-          architecture: 'x64'
-
-      # Updating pip to latest
-      #- script: python -m pip install --upgrade pip
-       # displayName: 'Upgrade pip'
-
-      # Updating to latest Azure CLI version.
-      #- script: pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
-      #  displayName: 'upgrade azure cli'
-
       - script: |
           echo $(System.AccessToken) | az login
           az aks get-credentials --resource-group jmeter-group --name jubernetes
