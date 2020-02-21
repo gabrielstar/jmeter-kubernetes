@@ -31,7 +31,7 @@ jobs:
     - task: KubernetesManifest@0
       displayName: Scale to $(scale_up_replicas)
       inputs:
-        kubernetesServiceConnection: $(kubernetes_service_connection)
+        kubernetesServiceConnection: $(kubernetesServiceConnection)
         action: scale
         kind: deployment
         name: $(service)
@@ -42,4 +42,3 @@ jobs:
       displayName: 'Run dummy test'
       inputs:
         scriptPath: start_test_from_script.sh
-
