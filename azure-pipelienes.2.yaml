@@ -1,14 +1,21 @@
 #This pipeline is configured with PAT so requires TFA - need to be refactored so it is not required
 #restarting is done by scaling to 0 and back to desired number of slaves = all pods - 1
 name: $(BuildID)
+
+schedules:
+#every 5 minutes
+- cron: "*/5 * * * *"
+  displayName: Daily midnight build
+  branches:
+    include:
+    - master
+  always: true
+
 variables:
-  azure_subscription_endpoint: p
-  azure_resource_group: jmeter-group
   cluster_name: jubernetes
   cluster_resource_group: jmeter-group
   cluster_namespace: jubernetes2
   kubernetesServiceConnection: pupa2
-  cluster_url: https://jubernetes-dns-782297cf.hcp.westeurope.azmk8s.io:443 #get it from kubectl cluster-info
   scale_down_replicas: 0
   scale_up_replicas: 2
   service: jmeter-slaves
