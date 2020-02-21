@@ -18,7 +18,9 @@ variables:
   kubernetesServiceConnection: pupa2
   scale_down_replicas: 0
   scale_up_replicas: 2
+  scale_up_replicas_master: 1
   service: jmeter-slaves
+  service-master: jmeter-master
 
 jobs:
   - job: Restart_Jmeter_Slaves
@@ -27,7 +29,7 @@ jobs:
     timeoutInMinutes: 5
     steps:
     - task: KubernetesManifest@0
-      displayName: Scale to $(scale_down_replicas)
+      displayName: Scale slaves to $(scale_down_replicas)
       inputs:
         kubernetesServiceConnection: $(kubernetesServiceConnection)
         action: scale
@@ -35,15 +37,34 @@ jobs:
         name: $(service)
         replicas: $(scale_down_replicas)
         namespace: $(cluster_namespace)
+    - task: KubernetesManifest@0
+      displayName: Scale master to $(scale_down_replicas)
+      inputs:
+        kubernetesServiceConnection: $(kubernetesServiceConnection)
+        action: scale
+        kind: deployment
+        name: $(service-master)
+        replicas: $(scale_down_replicas)
+        namespace: $(cluster_namespace)
 
     - task: KubernetesManifest@0
-      displayName: Scale to $(scale_up_replicas)
+      displayName: Scale slaves to $(scale_up_replicas)
       inputs:
         kubernetesServiceConnection: $(kubernetesServiceConnection)
         action: scale
         kind: deployment
         name: $(service)
         replicas: $(scale_up_replicas)
+        namespace: $(cluster_namespace)
+
+    - task: KubernetesManifest@0
+      displayName: Scale master to $(scale_up_replicas)
+      inputs:
+        kubernetesServiceConnection: $(kubernetesServiceConnection)
+        action: scale
+        kind: deployment
+        name: $(service-master)
+        replicas: $(scale_up_replicas_master)
         namespace: $(cluster_namespace)
 
     - task: Kubernetes@1
