@@ -29,10 +29,10 @@ jobs:
 
       - script: |
           echo "Rescaling cluster"
-          kubectl get pods -n jubernetes2
+          kubectl get pods -n $(cluster_namespace)
         displayName: 'Display status'
 
       - task: ShellScript@2
         inputs:
-          scriptPath: $(System.DefaultWorkingDirectory)/start_test_from_script.sh
+          scriptPath: $(System.DefaultWorkingDirectory)/start_test_from_script.sh $(cluster_namespace)
         displayName: 'Run dummy test'
