@@ -17,14 +17,14 @@ jobs:
         displayName: 'Upgrade pip'
 
       # Updating to latest Azure CLI version.
-      - script: pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
-        displayName: 'upgrade azure cli'
+      #- script: pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
+      #  displayName: 'upgrade azure cli'
 
       - script: az --version
         displayName: 'Show Azure CLI version'
 
-      - script: az extension add -n azure-devops
-        displayName: 'Install Azure DevOps Extension'
+      #- script: az extension add -n azure-devops
+      #  displayName: 'Install Azure DevOps Extension'
 
       - script: echo ${AZURE_DEVOPS_CLI_PAT} | az devops login
         env:
