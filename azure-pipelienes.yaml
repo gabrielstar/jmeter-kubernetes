@@ -1,10 +1,14 @@
 name: $(BuildID)
 jobs:
-  - job: Run_Jmeter_Tests_Kubernetes
+  - job: Restart_Jmeter_Slaves
     pool:
       vmImage: 'ubuntu-latest'
 
-    timeoutInMinutes: 5
+    variables:
+      timeout: 5
+      cluster_name: jubernetes
+    timeoutInMinutes: ${timeout}
+
     steps:
       # Updating the python version available on the linux agent
       - task: UsePythonVersion@0
@@ -46,8 +50,8 @@ jobs:
 
       - script: |
           echo $(System.AccessToken) | az devops login
-          kubectl config set-cluster jubernetes --server=https://jubernetes-dns-782297cf.hcp.westeurope.azmk8s.io:443
-          kubectl config use-context jubernetes
+          kubectl config set-cluster $(cluster_name) --server=https://jubernetes-dns-782297cf.hcp.westeurope.azmk8s.io:443
+          kubectl config use-context $(cluster_name)
           echo "Current state"
           kubectl get pods -n jubernetes2
           kubectl scale deployment jmeter-slaves --replicas=0 -n jubernetes2
