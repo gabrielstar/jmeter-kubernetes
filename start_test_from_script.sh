@@ -6,7 +6,7 @@
 working_dir="`pwd`"
 
 #Get namesapce variable
-tenant="$1"
+tenant="jubernetes2"
 jmx="cloudssky.jmx"
 
 
