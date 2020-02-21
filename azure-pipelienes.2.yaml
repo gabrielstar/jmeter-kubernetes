@@ -23,7 +23,7 @@ jobs:
     - task: KubernetesManifest@0
       displayName: Scale
       inputs:
-        kubernetesServiceConnection: pupa
+        kubernetesServiceConnection: pupa2
         action: scale
         kind: deployment
         name: jmeter-slaves
