@@ -20,7 +20,9 @@ jobs:
       #- script: pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
       #  displayName: 'upgrade azure cli'
 
-      - script: az aks get-credentials --resource-group jmeter-group --name jubernetes
+      - script: |
+          echo $(System.AccessToken) | az login
+          az aks get-credentials --resource-group jmeter-group --name jubernetes
         displayName: 'Get Kubernetes Credentials'
 
       - script: az --version
