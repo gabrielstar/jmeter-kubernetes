@@ -23,11 +23,11 @@ jobs:
     - task: KubernetesManifest@0
       displayName: Scale
       inputs:
+        kubernetesServiceConnection: p
         action: scale
         kind: deployment
         name: jmeter-slaves
         replicas: 5
-        kubernetesServiceConnection: p
         namespace: jubernetes2
 
 
