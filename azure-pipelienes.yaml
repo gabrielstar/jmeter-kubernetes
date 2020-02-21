@@ -1,3 +1,5 @@
+#This pipeline is configured with PAT so requires TFA - need to be refactored so it is not required
+
 name: $(BuildID)
 jobs:
   - job: Restart_Jmeter_Slaves
@@ -9,6 +11,8 @@ jobs:
       cluster_resource_group: jmeter-group
       cluster_namespace: jubernetes2
       cluster_url: https://jubernetes-dns-782297cf.hcp.westeurope.azmk8s.io:443 #get it from kubectl cluster-info
+      scale_down_replicas: 0
+      scale_up_replicas: 2
     timeoutInMinutes: 5
 
     steps:
@@ -27,13 +31,12 @@ jobs:
         displayName: 'Login and Set default Azure DevOps organization and project'
 
       - script: |
-          echo $(System.AccessToken) | az devops login
           kubectl config set-cluster $(cluster_name) --server=$(cluster_url)
           kubectl config use-context $(cluster_name)
           echo "Current state"
           kubectl get pods -n $(cluster_namespace)
-          kubectl scale deployment jmeter-slaves --replicas=0 -n $(cluster_namespace)
-        displayName: 'Scale to 0'
+          kubectl scale deployment jmeter-slaves --replicas=$(scale_down_replicas) -n $(cluster_namespace)
+        displayName: 'Scale down'
 
       - script: |
           echo "Rescaling cluster"
