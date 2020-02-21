@@ -24,7 +24,7 @@ jobs:
         displayName: kubectl apply
         inputs:
           connectionType: Azure Resource Manager
-          azureSubscriptionEndpoint: $(azure_subscription_endpoint)
+          azureSubscriptionEndpoint: p
           azureResourceGroup: $(azure_resource_group)
           kubernetesCluster: $(cluster_name)
           namespace: $(cluster_namespace)
