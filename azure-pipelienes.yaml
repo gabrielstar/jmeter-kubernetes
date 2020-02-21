@@ -13,8 +13,8 @@ jobs:
           architecture: 'x64'
 
       # Updating pip to latest
-      - script: python -m pip install --upgrade pip
-        displayName: 'Upgrade pip'
+      #- script: python -m pip install --upgrade pip
+       # displayName: 'Upgrade pip'
 
       # Updating to latest Azure CLI version.
       #- script: pip install --pre azure-cli --extra-index-url https://azurecliprod.blob.core.windows.net/edge
