@@ -39,9 +39,13 @@ jobs:
         namespace: $(cluster_namespace)
 
     - task: Kubernetes@1
+      displayName: Login to cluster $(cluster_name)
       inputs:
         command: login
         connectionType: Kubernetes Service Connection
         kubernetesServiceEndpoint: $(kubernetesServiceConnection)
 
-    - bash: kubectl get pv | grep Released
+    - task: ShellScript@2
+      displayName: 'Run dummy test'
+      inputs:
+        scriptPath: start_test_from_script.sh
