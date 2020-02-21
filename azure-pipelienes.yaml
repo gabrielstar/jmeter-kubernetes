@@ -37,5 +37,4 @@ jobs:
         - script: |
             az pipelines build list
             git pr list
-          displayName: 'Show build list and PRs
-
+          displayName: 'Show build list and PRs'
