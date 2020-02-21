@@ -32,6 +32,11 @@ jobs:
           kubectl get pods -n $(cluster_namespace)
         displayName: 'Display status'
 
+      - script: |
+          pwd
+          ls -alh
+        displayName: 'List dir'
+
       - task: ShellScript@2
         inputs:
           scriptPath: $(System.DefaultWorkingDirectory)/start_test_from_script.sh $(cluster_namespace)
