@@ -4,7 +4,7 @@ name: $(BuildID)
 
 schedules:
 #every 5 minutes
-- cron: "* */2 * * *"
+- cron: "0 */2 * * *"
   displayName: Daily midnight build
   branches:
     include:
