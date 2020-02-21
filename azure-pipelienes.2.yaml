@@ -20,13 +20,23 @@ jobs:
     timeoutInMinutes: 5
 
     steps:
-      - task: Kubernetes@1
-        displayName: kubectl apply
-        inputs:
-          connectionType: Azure Resource Manager
-          azureSubscriptionEndpoint: p
-          azureResourceGroup: $(azure_resource_group)
-          kubernetesCluster: $(cluster_name)
-          namespace: $(cluster_namespace)
-          arguments: -f jmeter_slaves_deploy.0.yaml
-          forceUpdate: true
+     - task: KubernetesManifest@0
+       displayName: Scale 0
+       inputs:
+         action: scale
+         kind: deployment
+         name: jmeter-slaves
+         replicas: 0
+         kubernetesServiceConnection: p
+         namespace: jubernetes2
+
+     - task: KubernetesManifest@0
+       displayName: Scale 2
+       inputs:
+         action: scale
+         kind: deployment
+         name: jmeter-slaves
+         replicas: 2
+         kubernetesServiceConnection: p
+         namespace: jubernetes2
+
