@@ -1,0 +1,13 @@
+name: $(BuildID)
+jobs:
+  - job: Run_Jmeter_Tests_Kubernetes
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    timeoutInMinutes: 5
+    steps:
+      - task: CmdLine@2
+        displayName: Get Credentials
+        inputs:
+          script: 'az aks get-credentials --resource-group jmeter-group --name jubernetes'
+

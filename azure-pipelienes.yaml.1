@@ -1,0 +1,29 @@
+# Maven
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+#https://dev.azure.com/gstarczewski/jmeter/_apis/build/builds?api-version=5.1
+name: $(BuildID)
+variables:
+  azureSubscriptionEndpoint: Contoso
+  azureContainerRegistry: gabrielstar.azurecr.io
+  azureResourceGroup: jmeter-group
+  kubernetesCluster: jubernetes
+
+jobs:
+  - job: Run_Jmeter_Tests_Kubernetes
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    timeoutInMinutes: 5
+    steps:
+      steps:
+        - task: KubernetesManifest@0
+          displayName: Scale Slaves to 0
+          inputs:
+            action: scale
+            kind: deployment
+            name: jmeter-slaves
+            replicas: 0
+            kubernetesServiceConnection: someK8sSC
+            namespace: jubernetes2
