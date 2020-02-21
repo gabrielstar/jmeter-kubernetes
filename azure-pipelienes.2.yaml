@@ -20,23 +20,14 @@ jobs:
     timeoutInMinutes: 5
 
     steps:
-     - task: KubernetesManifest@0
-       displayName: Scale 0
-       inputs:
-         action: scale
-         kind: deployment
-         name: jmeter-slaves
-         replicas: 0
-         kubernetesServiceConnection: p
-         namespace: jubernetes2
+    - task: KubernetesManifest@0
+      displayName: Scale 0
+      inputs:
+       action: scale
+       kind: deployment
+       name: jmeter-slaves
+       replicas: 0
+       kubernetesServiceConnection: p
+       namespace: jubernetes2
 
-     - task: KubernetesManifest@0
-       displayName: Scale 2
-       inputs:
-         action: scale
-         kind: deployment
-         name: jmeter-slaves
-         replicas: 2
-         kubernetesServiceConnection: p
-         namespace: jubernetes2
 
