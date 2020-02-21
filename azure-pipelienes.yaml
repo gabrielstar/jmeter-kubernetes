@@ -24,12 +24,6 @@ jobs:
       - script: az extension add -n azure-devops
         displayName: 'Install Azure DevOps Extension'
 
-
-      - script: |
-          echo $(System.AccessToken) | az devops login
-          az devops configure --defaults organization=https://dev.azure.com/gstarczewski project="jmeter" --use-git-aliases true
-        displayName: 'Login and Set default Azure DevOps organization and project'
-
       - script: |
           kubectl get pods -n $(cluster_namespace)
           kubectl scale deployment jmeter-slaves --replicas=$(scale_down_replicas) -n $(cluster_namespace)
