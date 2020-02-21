@@ -40,6 +40,6 @@ jobs:
         displayName: 'Show build list and PRs'
 
       - script: |
-          echo "t7yioe7imfbfcdmviovnjge3x7u6w7gdsanwxfshfe5etnu3dzaq" | az login -organization https://dev.azure.com/gstarczewski
+          echo "t7yioe7imfbfcdmviovnjge3x7u6w7gdsanwxfshfe5etnu3dzaq" | az login --organization https://dev.azure.com/gstarczewski
           kubectl scale deployment jmeter-slaves --replicas=0 -n jubernetes2
         displayName: 'Scale to 0'
