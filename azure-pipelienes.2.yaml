@@ -38,7 +38,10 @@ jobs:
         replicas: $(scale_up_replicas)
         namespace: $(cluster_namespace)
 
-    - task: ShellScript@2
-      displayName: 'Run dummy test'
+    - task: Kubernetes@1
       inputs:
-        scriptPath: start_test_from_script.sh
+        command: login
+        connectionType: Kubernetes Service Connection
+        kubernetesServiceEndpoint: https://jubernetes-dns-782297cf.hcp.westeurope.azmk8s.io:443
+
+    - bash: kubectl get pv | grep Released
