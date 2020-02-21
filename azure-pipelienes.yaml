@@ -1,5 +1,5 @@
 #This pipeline is configured with PAT so requires TFA - need to be refactored so it is not required
-
+#restarting is done by scaling to 0 and back to desired number of slaves = all pods - 1
 name: $(BuildID)
 jobs:
   - job: Restart_Jmeter_Slaves
@@ -13,6 +13,7 @@ jobs:
       cluster_url: https://jubernetes-dns-782297cf.hcp.westeurope.azmk8s.io:443 #get it from kubectl cluster-info
       scale_down_replicas: 0
       scale_up_replicas: 2
+
     timeoutInMinutes: 5
 
     steps:
@@ -21,17 +22,17 @@ jobs:
           az aks get-credentials --resource-group $(cluster_resource_group) --name $(cluster_name)
         displayName: 'Get Kubernetes Credentials'
 
-      - script: az extension add -n azure-devops
-        displayName: 'Install Azure DevOps Extension'
-
       - script: |
           kubectl get pods -n $(cluster_namespace)
-          kubectl scale deployment jmeter-slaves --replicas=$(scale_down_replicas) -n $(cluster_namespace)
-        displayName: 'Scale down'
+          kubectl scale deployment jmeter-slaves --replicas=$(scale_up_replicas) -n $(cluster_namespace)
+        displayName: 'Scale up'
 
       - script: |
           echo "Rescaling cluster"
           kubectl get pods -n jubernetes2
+        displayName: 'Display status'
 
-        displayName: 'Dispay status'
-
+      - task: ShellScript@2
+        inputs:
+          scriptPath:$(System.DefaultWorkingDirectory)/start_test_from_script.sh
+        displayName: 'Run dummy test'
