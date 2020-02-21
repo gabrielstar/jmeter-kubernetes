@@ -48,6 +48,16 @@ jobs:
         namespace: $(cluster_namespace)
 
     - task: KubernetesManifest@0
+      displayName: Scale master to $(scale_up_replicas)
+      inputs:
+        kubernetesServiceConnection: $(kubernetesServiceConnection)
+        action: scale
+        kind: deployment
+        name: $(service-master)
+        replicas: $(scale_up_replicas_master)
+        namespace: $(cluster_namespace)
+
+    - task: KubernetesManifest@0
       displayName: Scale slaves to $(scale_up_replicas)
       inputs:
         kubernetesServiceConnection: $(kubernetesServiceConnection)
@@ -57,15 +67,7 @@ jobs:
         replicas: $(scale_up_replicas)
         namespace: $(cluster_namespace)
 
-    - task: KubernetesManifest@0
-      displayName: Scale master to $(scale_up_replicas)
-      inputs:
-        kubernetesServiceConnection: $(kubernetesServiceConnection)
-        action: scale
-        kind: deployment
-        name: $(service-master)
-        replicas: $(scale_up_replicas_master)
-        namespace: $(cluster_namespace)
+
 
     - task: Kubernetes@1
       displayName: Login to cluster $(cluster_name)

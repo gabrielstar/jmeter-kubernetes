@@ -14,7 +14,7 @@ test_name="$(basename "$jmx")"
 
 #Get Master pod details
 
-master_pod=`kubectl get po -n $tenant | grep jmeter-master | awk '{print $1}'`
+master_pod=`kubectl get po -n $tenant | grep Running | grep jmeter-master | awk '{print $1}'`
 
 kubectl cp "$jmx" -n $tenant "$master_pod:/$test_name"
 
