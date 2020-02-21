@@ -34,5 +34,5 @@ jobs:
 
       - task: ShellScript@2
         inputs:
-          scriptPath:$(System.DefaultWorkingDirectory)/start_test_from_script.sh
+          scriptPath: $(System.DefaultWorkingDirectory)/start_test_from_script.sh
         displayName: 'Run dummy test'
