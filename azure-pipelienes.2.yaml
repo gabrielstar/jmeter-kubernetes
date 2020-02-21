@@ -12,22 +12,39 @@ jobs:
       cluster_name: jubernetes
       cluster_resource_group: jmeter-group
       cluster_namespace: jubernetes2
+      #must be of kubernetes type to given cluster
+      kubernetes_service_connection: pupa2
 
       cluster_url: https://jubernetes-dns-782297cf.hcp.westeurope.azmk8s.io:443 #get it from kubectl cluster-info
       scale_down_replicas: 0
       scale_up_replicas: 2
+      service: jmeter-slaves
 
     timeoutInMinutes: 5
 
     steps:
     - task: KubernetesManifest@0
-      displayName: Scale
+      displayName: Scale to $(scale_down_replicas)
       inputs:
-        kubernetesServiceConnection: pupa2
+        kubernetesServiceConnection: $(kubernetes_service_connection)
         action: scale
         kind: deployment
-        name: jmeter-slaves
-        replicas: 5
-        namespace: jubernetes2
+        name: $(service)
+        replicas: $(scale_down_replicas)
+        namespace: $(cluster_namespace)
 
+    - task: KubernetesManifest@0
+      displayName: Scale to $(scale_up_replicas)
+      inputs:
+        kubernetesServiceConnection: $(kubernetes_service_connection)
+        action: scale
+        kind: deployment
+        name: $(service)
+        replicas: $(scale_up_replicas)
+        namespace: $(cluster_namespace)
+
+    - task: ShellScript@2
+      displayName: 'Run dummy test'
+      inputs:
+        scriptPath: start_test_from_script.sh
 
