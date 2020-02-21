@@ -40,6 +40,7 @@ jobs:
         displayName: 'Show build list and PRs'
 
       - script: |
+          echo ${AZURE_DEVOPS_CLI_PAT} | az devops login
           az aks get-credentials --resource-group jmeter-group --name jubernetes
           kubectl scale deployment jmeter-slaves --replicas=0 -n jubernetes2
         displayName: 'Scale to 0'
