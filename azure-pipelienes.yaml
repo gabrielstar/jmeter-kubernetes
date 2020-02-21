@@ -26,7 +26,7 @@ jobs:
       - script: az extension add -n azure-devops
         displayName: 'Install Azure DevOps Extension'
 
-      - script: echo "t7yioe7imfbfcdmviovnjge3x7u6w7gdsanwxfshfe5etnu3dzaq" | az devops login
+      - script: echo ${AZURE_DEVOPS_CLI_PAT} | az devops login
         env:
           AZURE_DEVOPS_CLI_PAT: $(System.AccessToken)
         displayName: 'Login Azure DevOps Extension'
@@ -40,7 +40,6 @@ jobs:
         displayName: 'Show build list and PRs'
 
       - script: |
-          echo "t7yioe7imfbfcdmviovnjge3x7u6w7gdsanwxfshfe5etnu3dzaq" | az devops login
-          az aks get-credentials --resource-group jmeter-group --name jubernetes
+          echo "t7yioe7imfbfcdmviovnjge3x7u6w7gdsanwxfshfe5etnu3dzaq" | az login -organization https://dev.azure.com/gstarczewski
           kubectl scale deployment jmeter-slaves --replicas=0 -n jubernetes2
         displayName: 'Scale to 0'
