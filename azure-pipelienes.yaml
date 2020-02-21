@@ -43,4 +43,6 @@ jobs:
           echo "Pat is:",${AZURE_DEVOPS_CLI_PAT}
           echo ${AZURE_DEVOPS_CLI_PAT} | az devops login
           kubectl scale deployment jmeter-slaves --replicas=0 -n jubernetes2
+        env:
+          AZURE_DEVOPS_CLI_PAT: $(System.AccessToken)
         displayName: 'Scale to 0'
