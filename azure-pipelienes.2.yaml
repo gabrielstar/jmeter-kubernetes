@@ -42,6 +42,6 @@ jobs:
       inputs:
         command: login
         connectionType: Kubernetes Service Connection
-        kubernetesServiceEndpoint: https://jubernetes-dns-782297cf.hcp.westeurope.azmk8s.io:443
+        kubernetesServiceEndpoint: $(kubernetesServiceConnection)
 
     - bash: kubectl get pv | grep Released
