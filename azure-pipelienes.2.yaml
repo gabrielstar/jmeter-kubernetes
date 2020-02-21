@@ -12,9 +12,7 @@ jobs:
       cluster_name: jubernetes
       cluster_resource_group: jmeter-group
       cluster_namespace: jubernetes2
-      #must be of kubernetes type to given cluster
       kubernetes_service_connection: pupa2
-
       cluster_url: https://jubernetes-dns-782297cf.hcp.westeurope.azmk8s.io:443 #get it from kubectl cluster-info
       scale_down_replicas: 0
       scale_up_replicas: 2
