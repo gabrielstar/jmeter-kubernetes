@@ -22,4 +22,5 @@ kubectl cp "$jmx" -n $tenant "$master_pod:/$test_name"
 ## Echo Starting Jmeter load test
 
 threads=$1
+echo "Threads $threads"
 kubectl exec -ti -n $tenant $master_pod -- /bin/bash /load_test "$test_name" -Gthreads="$threads"
