@@ -30,6 +30,6 @@ echo "Report dir $report_dir"
 echo "Jmeter args $jmeter_args"
 kubectl exec -ti -n $tenant $master_pod -- mkdir "$report_dir"
 kubectl exec -ti -n $tenant $master_pod -- /bin/bash /load_test "$test_name -Gthreads=$threads $jmeter_args -o /$report_dir"
-kubectl cp "$tenant/$master_pod:/$report_dir" .
+kubectl cp "$tenant/$master_pod:/$report_dir" $report_dir
 ls -alh
 pwd
