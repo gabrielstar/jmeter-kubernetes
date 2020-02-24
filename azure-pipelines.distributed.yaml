@@ -24,6 +24,7 @@ variables:
   scale_up_replicas_master: 1
   service: jmeter-slaves
   service-master: jmeter-master
+  report_dir: reports
 
 jobs:
   - job: JMeter_Tests
@@ -79,8 +80,12 @@ jobs:
         connectionType: Kubernetes Service Connection
         kubernetesServiceEndpoint: $(kubernetesServiceConnection)
 
+    - script: |
+        mkdir /$(report_dir)
+      displayName: 'Create report dir'
+
     - task: ShellScript@2
       displayName: JMeter tests
       inputs:
         scriptPath: start_test_from_script.sh
-        args: $(threads) "-l /results.csv -e -o /"
+        args: $(threads) "-l /results.csv -e -o /$(report_dir)"

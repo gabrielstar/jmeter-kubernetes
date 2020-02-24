@@ -26,5 +26,4 @@ jmeter_args=$2
 
 echo "Threads $threads"
 echo "Jmeter args $jmeter_args"
-
 kubectl exec -ti -n $tenant $master_pod -- /bin/bash /load_test "$test_name -Gthreads=$threads $jmeter_args"
