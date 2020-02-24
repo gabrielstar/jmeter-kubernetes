@@ -78,7 +78,8 @@ jobs:
     - task: ShellScript@2
       displayName: JMeter tests
       inputs:
-        scriptPath: start_test_from_script.sh $(threads)
+        scriptPath: start_test_from_script.sh
+        arguments: $(threads)
 
     - task: PublishPipelineArtifact@1
       displayName: Archive JMeter Report
