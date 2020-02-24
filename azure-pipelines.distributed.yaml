@@ -37,6 +37,7 @@ jobs:
         name: $(service)
         replicas: $(scale_down_replicas)
         namespace: $(cluster_namespace)
+
     - task: KubernetesManifest@0
       displayName: Scale master to $(scale_down_replicas)
       inputs:
@@ -67,8 +68,6 @@ jobs:
         replicas: $(scale_up_replicas)
         namespace: $(cluster_namespace)
 
-
-
     - task: Kubernetes@1
       displayName: Login to cluster $(cluster_name)
       inputs:
@@ -77,6 +76,12 @@ jobs:
         kubernetesServiceEndpoint: $(kubernetesServiceConnection)
 
     - task: ShellScript@2
-      displayName: 'Run dummy test'
+      displayName: JMeter tests
       inputs:
         scriptPath: start_test_from_script.sh
+
+    - task: PublishPipelineArtifact@1
+      displayName: Archive JMeter Report
+      inputs:
+        path: $(System.DefaultWorkingDirectory)/target/jmeter/reports
+        artifact: JmeterReport

@@ -42,3 +42,4 @@ jobs:
         inputs:
           scriptPath: start_test_from_script.sh
         displayName: 'Run dummy test'
+
