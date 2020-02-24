@@ -23,7 +23,8 @@ variables:
   service-master: jmeter-master
 
 jobs:
-  - job: Restart_Jmeter_Slaves
+  - job: JMeter_Tests
+    displayName: JMeter Tests Regression Pipeline
     pool:
       vmImage: 'ubuntu-latest'
     timeoutInMinutes: 5
