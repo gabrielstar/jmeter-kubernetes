@@ -85,3 +85,9 @@ jobs:
       inputs:
         scriptPath: start_test_from_script.sh
         args: $(threads) $(report_dir) "-l /results.csv -e"
+
+    - task: PublishPipelineArtifact@1
+      displayName: Archive JMeter Report
+      inputs:
+        path: /$(report_dir)
+        artifact: JmeterReport
