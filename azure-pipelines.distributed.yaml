@@ -89,5 +89,5 @@ jobs:
     - task: PublishPipelineArtifact@1
       displayName: Archive JMeter Report
       inputs:
-        path: /$(report_dir)
+        path: $(report_dir)
         artifact: JmeterReport
