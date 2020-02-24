@@ -80,12 +80,8 @@ jobs:
         connectionType: Kubernetes Service Connection
         kubernetesServiceEndpoint: $(kubernetesServiceConnection)
 
-    - script: |
-        mkdir /$(report_dir)
-      displayName: 'Create report dir'
-
     - task: ShellScript@2
       displayName: JMeter tests
       inputs:
         scriptPath: start_test_from_script.sh
-        args: $(threads) "-l /results.csv -e -o /$(report_dir)"
+        args: $(threads) $(report_dir) "-l /results.csv -e"
