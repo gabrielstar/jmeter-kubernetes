@@ -80,4 +80,4 @@ jobs:
       displayName: JMeter tests
       inputs:
         scriptPath: start_test_from_script.sh
-        args: $(threads)
+        args: $(threads) -l results.csv -e -o .
