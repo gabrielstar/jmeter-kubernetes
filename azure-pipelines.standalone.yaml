@@ -1,5 +1,4 @@
-#This pipeline is configured with PAT so requires TFA - need to be refactored so it is not required
-#restarting is done by scaling to 0 and back to desired number of slaves = all pods - 1
+#This is the simplest example of azure pipeline executing jmeter tests with Two-Factor-Auth
 name: $(BuildID)
 jobs:
   - job: Restart_Jmeter_Slaves

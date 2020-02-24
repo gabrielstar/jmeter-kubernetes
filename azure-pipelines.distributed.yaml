@@ -1,5 +1,7 @@
-#This pipeline is configured with PAT so requires TFA - need to be refactored so it is not required
-#restarting is done by scaling to 0 and back to desired number of slaves = all pods - 1
+# This pipeline requires azure service connection of type "kubernetes service"
+# most of configuration resides in variables block
+# threads - is to be defined as azure pipeline variable in devops portal
+
 name: $(BuildID)
 
 schedules:
@@ -11,6 +13,7 @@ schedules:
     - master
   always: true
 
+#config
 variables:
   cluster_name: jubernetes
   cluster_resource_group: jmeter-group
@@ -80,4 +83,4 @@ jobs:
       displayName: JMeter tests
       inputs:
         scriptPath: start_test_from_script.sh
-        args: $(threads) -l results.csv -e -o .
+        args: $(threads) "l /results.csv -e -o /"
