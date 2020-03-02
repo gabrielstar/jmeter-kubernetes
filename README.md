@@ -1,3 +1,5 @@
+# This repo has been moved to https://github.com/ObjectivityLtd/jmeter-kubernetes , see there for latest version
+
 # Jmeter Cluster Support for Kubernetes and OpenShift
 
 ## Prerequisits
